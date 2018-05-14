@@ -1,0 +1,35 @@
+#head {
+    opacity: 0;
+}
+#torso {
+    opacity: 0;
+}
+#rightarm {
+    opacity: 0;
+}
+#leftarm {
+    opacity: 0;
+}
+#rightleg {
+    opacity: 0;
+}
+#leftleg {
+    opacity: 0;
+}
+.container { display: inline-block; width: 100px;}
+  
+.scene {
+    
+}
+
+.letter-group {
+    /* transform: translate(26%, 0) */
+}
+
+.missing {
+    opacity: 0;
+}
+
+.found {
+    opacity: 1;
+}
