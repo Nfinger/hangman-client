@@ -23,6 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "postinstall": "cp DrawSVGPlugin.js ./node_modules/gsap",
     "eject": "react-scripts eject"
   }
 }

@@ -60,7 +60,7 @@ export class Hangman extends Component {
                     <div style={styles.guessedLetterBox}>
                         <h2>Guessed Letters</h2>
                         <div style={styles.guesses}>
-                            {guesses.map(letter => <p style={styles.guessText}>{letter}</p>)}
+                            {guesses.map((letter, key) => <p key={key} style={styles.guessText}>{letter}</p>)}
                         </div>
                     </div>
                     <svg width={window.innerWidth/4} height="320" xmlns="http://www.w3.org/2000/svg">
