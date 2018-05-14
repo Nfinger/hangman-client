@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Button } from 'antd';
 import '../App.css';
 
 import { Hangman } from './hangman';
@@ -8,30 +9,18 @@ import { Api } from '../utils/Api';
 import { fonts } from '../theme';
 
 class Home extends Component {
-    state = {mistakes: 0, guesses: [], answer: '', value: '', error: '', user: null}
+    state = {mistakes: 0, guesses: [], answer: '', error: ''}
 
-    onChange = ({target: {value}} = {}) => {
-        if (this.timeout) clearTimeout(this.timeout)
-        let error = ""
-        if (value.length > 1) {
-            value = value[0]
-            error = "You can only guess one letter at a time"
-            this.timeout = setTimeout(() => {this.setState({error: ""})}, 2000)
-        }
-        this.setState({value, error})
-        }
-
-    handleEnter = ({key}) => {
+    handleClick = (letter) => {
         const {guesses, value, answer} = this.state
-        if (key === "Enter" && value.length > 0 && guesses.indexOf(value.toLowerCase()) === -1) {
-            guesses.push(value.toLowerCase())
+        if (!guesses.includes(letter)) {
+            guesses.push(letter)
             this.setState({guesses})
-            if (!answer.includes(value.toLowerCase())) {
-            const mistakes = this.state.mistakes + 1
-            this.setState({mistakes})
+            if (!answer.includes(letter)) {
+                const mistakes = this.state.mistakes + 1
+                this.setState({mistakes})
             }
-            this.setState({value: ""})
-        } else if (guesses.indexOf(value.toLowerCase()) > -1) {
+        } else if (guesses.indexOf(letter) > -1) {
             this.setState({error: "You have already guessed that letter. Try another one!"})
             this.timeout = setTimeout(() => {this.setState({error: ""})}, 2000)
         }
@@ -46,6 +35,9 @@ class Home extends Component {
 
     render() {
         let { error, guesses, mistakes, answer } = this.state;
+        let i=9,a='';
+        let alphabet = [...Array(26)].map(_=>a+=(++i).toString(36))
+        alphabet = alphabet[alphabet.length - 1].split("")
         const { auth: { user } } = this.props
         if (!user) return null
         return (
@@ -57,7 +49,7 @@ class Home extends Component {
                     </div>
                     <div className="input-container">
                         {error ? <p style={styles.text}>{error}</p> : <p style={styles.text}>Guess a letter!</p>}
-                        <input style={error ? styles.error : styles.input} value={this.state.value} onChange={this.onChange} onKeyDown={this.handleEnter} type={this.props.type} />
+                        {alphabet.map((letter, key) => <button key={key} disabled={guesses.includes(letter)} onClick={() => this.handleClick(letter)} style={!guesses.includes(letter) ? styles.letterButton : styles.disabledLetterButton}>{letter}</button>)}
                     </div>
                 </div>
                 :
@@ -96,6 +88,26 @@ const styles = {
         width: "20%",
         margin: 5,
         cursor: "pointer"
+    },
+    letterButton: {
+        color: "white",
+        backgroundColor: "#222",
+        padding: "9px 18px",
+        lineHeight: "1.57142857",
+        border: "none",
+        width: "10%",
+        margin: 5,
+        cursor: "pointer"
+    },
+    disabledLetterButton: {
+        color: "white",
+        backgroundColor: "#222",
+        padding: "9px 18px",
+        lineHeight: "1.57142857",
+        border: "none",
+        width: "10%",
+        margin: 5,
+        opacity: 0.3
     }
 }
   

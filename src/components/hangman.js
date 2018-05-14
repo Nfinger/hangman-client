@@ -7,7 +7,7 @@ import '../css/Hangman.css';
 import { fonts } from '../theme';
 
 export class Hangman extends Component {
-
+    state = {mistakes: 0}
     componentDidMount() {
         var tl = new TimelineMax();
         tl.add("draw");
@@ -16,6 +16,7 @@ export class Hangman extends Component {
 
     drawStickMan(mistakes) {
         var tl = new TimelineMax();
+        if (mistakes === this.state.mistakes) return;
         switch (mistakes) {
             case 1:
                 tl.add("head");
@@ -50,6 +51,7 @@ export class Hangman extends Component {
             default:
                 break   
         }
+        this.setState({mistakes})
     }
     render() {
         const { guesses, answer, mistakes } = this.props

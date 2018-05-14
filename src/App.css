@@ -50,8 +50,7 @@
 
 .input-container {
   flex: 1;
-  width: 50%;
-  padding-top: 5%;
+  width: 100%;
   align-self: center;
 }
 
