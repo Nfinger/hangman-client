@@ -1,3 +1,3 @@
 # hangman-client
-  npm i
-  npm start
+  ```npm i \n
+  npm start```
