@@ -47,12 +47,20 @@ class Signup extends Component {
 
     handleSubmit = () => {
         this.props.dispatchCreateUser(this.state)
+        this.closeModal()
     }
 
     handleSwitch = () => {
         this.setState(
             () => ({modalType: "login"}),
             () => this.props.onModalSwitch()
+        )
+    }
+
+    closeModal = () => {
+        this.setState(
+            ({open}) => ({open: !open}),
+            () => this.props.onClose(this.state.open),
         )
     }
     

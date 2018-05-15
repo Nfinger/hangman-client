@@ -42,7 +42,7 @@ class Home extends Component {
                 this.props.dispatchGameOver(this.state.game, win, correct.length, mistakes)
                 setTimeout(() => {
                     this.setState({open, win, finished})
-                }, 300)
+                }, 200)
             }
             if (!answer.includes(letter)) {
                 mistakes++
