@@ -5,7 +5,7 @@ import React, {
 import { TimelineMax } from "gsap"
 import { fonts } from '../theme'
 import '../css/Hangman.css'
-var DrawSVGPlugin = require('gsap/DrawSVGPlugin');
+import DrawSVGPlugin from 'gsap/DrawSVGPlugin'
 
 export class Hangman extends Component {
     state = {mistakes: 0, drawn: []}
