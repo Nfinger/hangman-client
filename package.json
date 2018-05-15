@@ -23,6 +23,7 @@
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0"
   },
+  "moduleDirectories": ["node_modules", "src"],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -2,9 +2,9 @@ import React, {
     Component
 } from 'react';
 import { TimelineMax } from "gsap";
-import DrawSVGPlugin from '../../node_modules/gsap/DrawSVGPlugin'
-import '../css/Hangman.css';
-import { fonts } from '../theme';
+import DrawSVGPlugin from 'node_modules/gsap/DrawSVGPlugin'
+import 'src/css/Hangman.css';
+import { fonts } from 'theme';
 
 export class Hangman extends Component {
     state = {mistakes: 0, drawn: []}
