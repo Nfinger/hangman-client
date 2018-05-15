@@ -11,6 +11,13 @@ class Profile extends Component {
             <div className="App-header">
                 <h1>Profile</h1>
                 <h3>{user.email}</h3>
+                <h4>Stats</h4>
+                <div className="divider"></div>
+                <div className="stat-container">
+                    <h4 className="stat">Wins: {user.stats.wins}</h4>
+                    <h4 className="stat">Losses: {user.stats.losses}</h4>
+                    <h4 className="stat">Guess Accuracy: {user.stats.accuracy.toFixed(2)}%</h4>
+                </div>
             </div>
         )
     }

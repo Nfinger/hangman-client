@@ -7,7 +7,7 @@ import '../css/Hangman.css';
 import { fonts } from '../theme';
 
 export class Hangman extends Component {
-    state = {mistakes: 0}
+    state = {mistakes: 0, drawn: []}
     componentDidMount() {
         var tl = new TimelineMax();
         tl.add("draw");
@@ -15,63 +15,91 @@ export class Hangman extends Component {
     }
 
     drawStickMan(mistakes) {
-        var tl = new TimelineMax();
+        const tl = new TimelineMax();
         if (mistakes === this.state.mistakes) return;
         switch (mistakes) {
             case 1:
+                tl.add("hang");
+                tl.to("#hang", 0, {"opacity": 1})
+                tl.fromTo("#hang", 1, {drawSVG:0}, {drawSVG:"100%"}, 0);
+                break
+            case 2:
+                tl.add("rope");
+                tl.to("#rope", 0, {"opacity": 1})
+                tl.fromTo("#rope", 1, {drawSVG:0}, {drawSVG:"100%"}, 0);
+                break
+            case 3:
                 tl.add("head");
                 tl.to("#head", 0, {"opacity": 1})
                 tl.fromTo("#head", 1, {drawSVG:0}, {drawSVG:"100%"}, 0);
                 break
-            case 2: 
+            case 4: 
                 tl.add("torso");
                 tl.to("#torso", 0, {"opacity": 1})
                 tl.fromTo("#torso", 1, {drawSVG:0}, {drawSVG:"100%"}, 0);
                 break
-            case 3: 
+            case 5: 
                 tl.add("rightarm");
                 tl.to("#rightarm", 0, {"opacity": 1})
                 tl.fromTo("#rightarm", 1, {drawSVG:0}, {drawSVG:"100%"}, 0);
                 break
-            case 4: 
+            case 6: 
                 tl.add("leftarm");
                 tl.to("#leftarm", 0, {"opacity": 1})
                 tl.fromTo("#leftarm", 1, {drawSVG:0}, {drawSVG:"100%"}, 0);
                 break
-            case 5: 
+            case 7: 
                 tl.add("rightleg");
                 tl.to("#rightleg", 0, {"opacity": 1})
                 tl.fromTo("#rightleg", 1, {drawSVG:0}, {drawSVG:"100%"}, 0);
                 break
-            case 6: 
+            case 8: 
                 tl.add("leftleg");
                 tl.to("#leftleg", 0, {"opacity": 1})
                 tl.fromTo("#leftleg", 1, {drawSVG:0}, {drawSVG:"100%"}, 0);
+                break
+            case 9: 
+                tl.add("leftX");
+                tl.to("#leftX", 0, {"opacity": 1})
+                tl.fromTo("#leftX", 1, {drawSVG:0}, {drawSVG:"100%"}, 0);
+                break
+            case 10: 
+                tl.add("rightX");
+                tl.to("#rightX", 0, {"opacity": 1})
+                tl.fromTo("#rightX", 1, {drawSVG:0}, {drawSVG:"100%"}, 0);
                 break
             default:
                 break   
         }
         this.setState({mistakes})
     }
+
     render() {
         const { guesses, answer, mistakes } = this.props
         this.drawStickMan(mistakes)
         return (
             <div className='scene'>
                 <div style={styles.hangman}>
-                    <div style={styles.guessedLetterBox}>
+                    <div className="guessed-letter-box">
                         <h2>Guessed Letters</h2>
+                        <h4>Guesses Left: {10 - mistakes}</h4>
                         <div style={styles.guesses}>
                             {guesses.map((letter, key) => <p key={key} style={styles.guessText}>{letter}</p>)}
                         </div>
                     </div>
-                    <svg width={window.innerWidth/4} height="320" xmlns="http://www.w3.org/2000/svg">
+                    <svg width={(window.innerWidth >= 320 && window.innerWidth <= 480) ? 200 : window.innerWidth/4} height="320" xmlns="http://www.w3.org/2000/svg">
                         <g id="stand">
-                            <line fill="none" stroke="white" strokeWidth="3" strokeLinejoin="null" strokeLinecap="null" x1="161" y1="25" x2="161" y2="49" id="svg_20"/>
-                            <line fill="none" stroke="white" strokeWidth="3" strokeLinejoin="null" strokeLinecap="null" x1="161" y1="26" x2="61" y2="28" id="svg_21"/>
-                            <line fill="none" stroke="white" strokeWidth="3" strokeLinejoin="null" strokeLinecap="null" x1="61" y1="26" x2="62" y2="316" id="svg_23"/>
-                            <line fill="none" stroke="white" strokeWidth="3" strokeLinejoin="null" strokeLinecap="null" x1="25" y1="315" x2="101" y2="315" id="svg_24"/>
+                            <line fill="none" stroke="white" strokeWidth="3" strokeLinejoin="null" strokeLinecap="null" x1="161" y1="25" x2="161" y2="49" id="rope"/>
+                            <line fill="none" stroke="white" strokeWidth="3" strokeLinejoin="null" strokeLinecap="null" x1="161" y1="26" x2="61" y2="28" id="hang"/>
+                            <line fill="none" stroke="white" strokeWidth="3" strokeLinejoin="null" strokeLinecap="null" x1="61" y1="26" x2="62" y2="316" id="middle"/>
+                            <line fill="none" stroke="white" strokeWidth="3" strokeLinejoin="null" strokeLinecap="null" x1="25" y1="315" x2="101" y2="315" id="bottom"/>
                         </g>
+                        <svg x="145" y="63">
+                            <polygon id="leftX" stroke="white" fill="none" points="10.16 1.41 8.75 0 5.08 3.67 1.41 0 0 1.41 3.67 5.08 0 8.75 1.41 10.16 5.08 6.5 8.75 10.16 10.16 8.75 6.5 5.08 10.16 1.41"/>
+                        </svg>
+                        <svg x="165" y="63">
+                            <polygon id="rightX" stroke="white" fill="none" points="10.16 1.41 8.75 0 5.08 3.67 1.41 0 0 1.41 3.67 5.08 0 8.75 1.41 10.16 5.08 6.5 8.75 10.16 10.16 8.75 6.5 5.08 10.16 1.41"/>
+                        </svg>
                         <g>
                             <ellipse id="head" fill="none" stroke="white" strokeWidth="5" cx="160" cy="77" rx="25" ry="26"/>
                         </g>
@@ -93,18 +121,11 @@ export class Hangman extends Component {
                     </svg>
                 </div>
                 <div style={styles.letters}>
-                    <svg width={answer.length * 110} height="100" className="word">
-                        {answer.split("").map((letter, idx) => {
-                            let className = "missing"
-                            if (guesses.includes(letter)) className = "found"
-                            return (
-                                <g key={idx} className="letter-group">
-                                    <text className={className} fontSize={56} style={{paddingLeft: "5%"}} x={idx * 100 + 30} y="90" fill="white">{letter}</text>
-                                    <line fill="none" stroke="white" strokeWidth="3" strokeLinejoin="null" strokeLinecap="null" x1={idx * 100} y1="100" x2={(idx+1) * 100 - 10} y2="100" id="svg_24"/>
-                                </g>
-                            )
-                        })}
-                    </svg>
+                    {answer.split("").map((letter, idx) => {
+                        let className = "missing"
+                        if (guesses.includes(letter)) className = "found"
+                        return <span key={idx} className="letter-box" style={{width: window.innerWidth/answer.length}}><p className={`letter ${className}`} >{letter}</p></span>
+                    })}
                 </div>
             </div>
         )
@@ -114,24 +135,18 @@ export class Hangman extends Component {
 const styles = {
     hangman: {
         width: "100%",
+        height: "100%",
         display: "flex",
         flexDirection: "row",
         alignItems: "center"
     },
     letters: {
-
-        width: "100%",
+        display: "flex",
+        width: "96%",
+        height: "10%",
+        marginLeft: "2%",
+        marginRight: "2%",
         justifyContent: "center"
-    },
-    guessedLetterBox: {
-        marginLeft: 20,
-        marginTop: 20,
-        marginRight: "20%",
-        height: 250,
-        width: 250,
-        border: 1,
-        borderStyle: "solid",
-        borderColor: "white"
     },
     guesses: {
         display: "flex",

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { FacebookLogin } from 'react-facebook-login-component';
 import { GoogleLogin } from 'react-google-login-component';
 import { config } from '../config';
 import { Api } from '../utils/Api';
+import { loginUser } from '../utils/action';
 
-export class Login extends Component {
+class Login extends Component {
     state = {email: '', password: '', open: true, modalType: "login"}
     
     responseFacebook (response) {
@@ -12,12 +14,17 @@ export class Login extends Component {
         //anything else you want to do(save to localStorage)...
     }
 
-    responseGoogle (googleUser) {
-        console.log(googleUser.w3.U3)
-        var response = googleUser.getAuthResponse()
-        var googleId = googleUser.getId()
-        
-        //anything else you want to do(save to localStorage)...
+    responseGoogle = (googleUser) => {
+        const userInfo = { ...googleUser.w3 }
+        const response = googleUser.getAuthResponse()
+        const googleId = googleUser.getId()
+        const user = {
+            email: userInfo.U3,
+            username: userInfo.ig.replace(" ", ""),
+            password: userInfo.Eea
+        }
+        this.props.dispatchLogin(user)
+        this.closeModal()
     }
 
     handleChange = (event) => {
@@ -28,14 +35,15 @@ export class Login extends Component {
     }
 
     handleSubmit = () => {
-        Api.login(this.state).then((res) => {
-            const { user } = res.data;
-            localStorage.setItem("userId", user.id)
-            this.setState(
-                ({open}) => ({open: !open}),
-                () => this.props.onClose(this.state.open),
-            )
-        })
+        this.props.dispatchLogin(this.state)
+        this.closeModal()
+    }
+
+    closeModal = () => {
+        this.setState(
+            ({open}) => ({open: !open}),
+            () => this.props.onClose(this.state.open),
+        )
     }
 
     handleSwitch = () => {
@@ -47,7 +55,7 @@ export class Login extends Component {
     
     render () {
         return (
-            <div style={styles.modal}>
+            <div className="modal">
                 <h1>Login</h1>
                 <div>
                     <FacebookLogin socialId="yourAppID"
@@ -68,27 +76,28 @@ export class Login extends Component {
                                 responseHandler={this.responseGoogle}
                                 buttonText="Login With Google"/>
                 </div>
-                <div style={styles.inputContainer}>
+                <div className="input-container">
                     <input name="email" style={styles.inputFields} value={this.state.email} onChange={this.handleChange} type="email" placeholder="Email" required />
                     <input name="password" style={styles.inputFields} value={this.state.password} onChange={this.handleChange} type="password" placeholder="Password" required />
                     <button style={styles.facebookLogin} onClick={this.handleSubmit}>Login</button>
                 </div>
-                <p className="link" onClick={this.handleSwitch}>Switch to signup</p>
+                <p className="link" style={{padding: 0}} onClick={this.handleSwitch}>Switch to signup</p>
             </div>
         );
     }
 }
 
+const mapStateToProps = state => ({
+    user: state.user
+})
+
+const mapDispatchToProps = {
+    dispatchLogin: (user) => loginUser(user),
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
+
 const styles = {
-    modal: {
-        padding: 20
-    },
-    inputContainer: {
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        padding: 5
-    },
     inputFields: {
         borderRadius: 10,
         width: "100%",

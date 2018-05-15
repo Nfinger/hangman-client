@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Router, Route } from 'react-router'
+import { 
+  Router,
+  Route,
+  Redirect,
+  withRouter
+} from 'react-router'
 import  { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import createBrowserHistory from 'history/createBrowserHistory'
@@ -10,15 +15,23 @@ import Home from './components/home';
 import Profile from './components/profile';
 import { Hangman } from './components/hangman';
 import Signup from './components/signup';
-import { Login } from './components/login';
+import Login from './components/login';
 import { Api } from './utils/Api';
 import { fonts } from './theme';
 import { authenticate, logoutUser } from './utils/action';
 
 const history = createBrowserHistory()
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    rest.user
+      ? <Component {...props} />
+      : <Redirect to='/' />
+  )} />
+)
+
 class App extends Component {
-  state = {open: false, user: null, modalType: ""}
+  state = {open: false, user: null, modalType: "signup"}
 
   async componentDidMount() {
     const userId = localStorage.getItem("userId")
@@ -66,7 +79,7 @@ class App extends Component {
             }
           </header>
           <Route exact path="/" component={Home}/>
-          <Route path="/profile" component={Profile}/>
+          <PrivateRoute path="/profile" user={user} component={Profile}/>
           <Modal open={open} onClose={this.onCloseModal}>
             {modalType === "signup" ? <Signup onClose={this.onCloseModal} onModalSwitch={this.onModalSwitch} /> : <Login onClose={this.onCloseModal} onModalSwitch={this.onModalSwitch} />}
           </Modal>

@@ -1,7 +1,8 @@
 import {
     LOG_IN,
     SIGN_UP,
-    LOG_OUT
+    LOG_OUT,
+    UPDATE_USER
 } from '../reducers/auth'
 
 import { Api } from './Api';
@@ -16,6 +17,25 @@ export function createUser(user) {
     }
 }
 
+export const loginUser = (user) => {
+    return (dispatch) => {
+        Api.login(user).then((res) => {
+            const { user } = res.data;
+            dispatch(logIn(user))
+            localStorage.setItem("userId", user.id)
+        })
+    }
+}
+
+export const gameOver = (gameId, outcome, correct, incorrect) => {
+    return (dispatch) => {
+        Api.finishGame(gameId, outcome, correct, incorrect).then(res => {
+            const { user } = res.data;
+            dispatch(updateUser(user))
+        })
+    }
+}
+
 function signUp(user) {
     return {
         user,
@@ -27,6 +47,13 @@ function logIn(user) {
     return {
         user,
         type: LOG_IN
+    }
+}
+
+function updateUser(user) {
+    return {
+        user,
+        type: UPDATE_USER
     }
 }
 
@@ -50,23 +77,3 @@ export const authenticate =  (userId) => {
         dispatch(logIn(user))
     }
 }
-// export function confirmUserLogin(authCode) {
-//     return (dispatch, getState) => {
-//         // dispatch(confirmLogIn())
-//         const {
-//             auth: {
-//                 user
-//             }
-//         } = getState()
-//         console.log('state: ', getState())
-//         Api.confirmSignIn(user, authCode)
-//             .then(data => {
-//                 console.log('data from confirmLogin: ', data)
-//                 dispatch(confirmLoginSuccess(data))
-//             })
-//             .catch(err => {
-//                 console.log('error signing in: ', err)
-//                 dispatch(confirmSignUpFailure(err))
-//             })
-//     }
-// }

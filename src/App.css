@@ -17,7 +17,7 @@
 }
 
 .nav-links {
-  width: 10%;
+  width: 15%;
   display: flex;
   flex-direction: row;
 }
@@ -48,7 +48,7 @@
   font-size: large;
 }
 
-.input-container {
+.guess-container {
   flex: 1;
   width: 100%;
   align-self: center;
@@ -76,6 +76,64 @@
   opacity: .65;
 }
 
+.gif-container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%
+}
+
+.finished-gif {
+  height: 50%;
+  width: 50%;
+  opacity: 0.7;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 40%;
+    padding: 5;
+}
+
+.styles_modal__gNwvD {
+  margin-top: 20%;
+  height: 55%;
+  width: 100%
+}
+
+.divider {
+  width: 80%;
+  border-bottom: 1px;
+  border-left-color: #222;
+  border-right-color: #222;
+  border-top-color: #222;
+  border-style: solid;
+  border-bottom-color: white;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.stat-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.stat {
+  flex: 1;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -83,4 +141,21 @@
 
 #root {
   width: 100%;
+  padding-bottom: 5%;
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  
+  
+  .nav-links {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+  }
+  
 }

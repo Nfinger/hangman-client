@@ -17,4 +17,8 @@ export class Api {
     static newGame = (userId, difficulty) => {
         return axios.get(`${config.baseAPI}/game/${userId}/${difficulty}`)
     }
+
+    static finishGame = (gameId, outcome, correct, incorrect) => {
+        return axios.post(`${config.baseAPI}/game/${gameId}`, {outcome, correct, incorrect})
+    }
 }

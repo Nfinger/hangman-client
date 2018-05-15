@@ -19,15 +19,23 @@ class Signup extends Component {
     
     responseFacebook (response) {
         console.log(response);
-        //anything else you want to do(save to localStorage)...
+        this.props.dispatchCreateUser()
     }
 
-    responseGoogle (googleUser) {
-        console.log(googleUser.w3.U3)
-        var response = googleUser.getAuthResponse()
-        var googleId = googleUser.getId()
-        
-        //anything else you want to do(save to localStorage)...
+    responseGoogle = (googleUser) => {
+        const userInfo = { ...googleUser.w3 }
+        const response = googleUser.getAuthResponse()
+        const googleId = googleUser.getId()
+        const user = {
+            email: userInfo.U3,
+            username: userInfo.ig.replace(" ", ""),
+            password: userInfo.Eea
+        }
+        this.props.dispatchCreateUser(user)
+        this.setState(
+            ({open}) => {open: !open},
+            () => this.props.onClose(this.state.open)
+        )
     }
 
     handleChange = (event) => {
@@ -44,16 +52,16 @@ class Signup extends Component {
     handleSwitch = () => {
         this.setState(
             () => ({modalType: "login"}),
-            () => this.props.onModalSwitch(this.state.modalType)
+            () => this.props.onModalSwitch()
         )
     }
     
     render () {
         return (
-            <div style={styles.modal}>
+            <div className="modal">
                 <h1>Signup</h1>
                 <div>
-                    <FacebookLogin socialId="yourAppID"
+                    <FacebookLogin socialId="589920334721501"
                                     language="en_US"
                                     scope="public_profile,email"
                                     responseHandler={this.responseFacebook}
@@ -61,7 +69,7 @@ class Signup extends Component {
                                     fields="id,email,name"
                                     version="v2.5"
                                     className="facebook-login"
-                                    buttonText="Login With Facebook"/>
+                                    buttonText="Sign up With Facebook"/>
 
                     <GoogleLogin socialId={config.googleClientId}
                                 className="google-login"
@@ -69,9 +77,9 @@ class Signup extends Component {
                                 prompt="select_account"
                                 fetchBasicProfile={true}
                                 responseHandler={this.responseGoogle}
-                                buttonText="Login With Google"/>
+                                buttonText="Sign up With Google"/>
                 </div>
-                <div style={styles.inputContainer}>
+                <div className="input-container">
                     {this.state.error && <p>{this.state.error}</p>}
                     <input name="username" style={styles.inputFields} value={this.state.username} onChange={this.handleChange} type="text" placeholder="Username" required />
                     <input name="email" style={styles.inputFields} value={this.state.email} onChange={this.handleChange} type="email" placeholder="Email" required />
@@ -79,7 +87,7 @@ class Signup extends Component {
                     <input name="secondPassword" style={styles.inputFields} value={this.state.secondPassword} onChange={this.handleChange} type="password" placeholder="Re-Enter Password" required />
                     <button style={styles.facebookLogin} onClick={this.handleSubmit}>Signup</button>
                 </div>
-                <p className="link" onClick={this.handleSwitch}>Switch to login</p>
+                <p className="link" style={{padding: 0}} onClick={this.handleSwitch}>Switch to login</p>
             </div>
         );
     }
@@ -90,21 +98,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    dispatchCreateUser: (email, password) => createUser(email, password)
+    dispatchCreateUser: (user) => createUser(user),
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup)
 
 const styles = {
-    modal: {
-        padding: 20
-    },
-    inputContainer: {
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        padding: 5
-    },
     inputFields: {
         borderRadius: 10,
         width: "100%",
