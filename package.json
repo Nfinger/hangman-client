@@ -6,6 +6,7 @@
     "aes-js": "^3.1.1",
     "animejs": "^2.2.0",
     "antd": "^3.5.2",
+    "app-root-path": "^2.0.1",
     "axios": "^0.18.0",
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "cryptojs": "^2.5.3",
@@ -23,7 +24,10 @@
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0"
   },
-  "moduleDirectories": ["node_modules", "src"],
+  "moduleDirectories": [
+    "node_modules",
+    "src"
+  ],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
