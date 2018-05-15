@@ -8,8 +8,6 @@ import { Api } from '../utils/Api';
 import { fonts } from '../theme';
 
 import { gameOver } from '../utils/action';
-import CryptoJS from 'crypto-js'
-const SECRET = "nate_is_the_best"
 class Home extends Component {
     state = {
         mistakes: 0,
