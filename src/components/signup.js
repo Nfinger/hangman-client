@@ -65,9 +65,11 @@ class Signup extends Component {
     }
     
     render () {
+        const { err } = this.props
         return (
             <div className="modal">
                 <h1>Signup</h1>
+                {err && <i className="error-text">{err}</i>}
                 <div>
                     <FacebookLogin socialId="589920334721501"
                                     language="en_US"
@@ -102,7 +104,8 @@ class Signup extends Component {
 }
 
 const mapStateToProps = state => ({
-    user: state.user
+    user: state.user,
+    err: state.err
 })
 
 const mapDispatchToProps = {

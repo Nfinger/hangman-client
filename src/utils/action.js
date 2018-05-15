@@ -1,6 +1,8 @@
 import {
     LOG_IN,
     SIGN_UP,
+    LOG_IN_ERROR,
+    SIGN_UP_ERROR,
     LOG_OUT,
     UPDATE_USER
 } from '../reducers/auth'
@@ -10,7 +12,8 @@ import { Api } from './Api';
 export function createUser(user) {
     return (dispatch) => {
         Api.signup(user).then((res) => {
-            const { user } = res.data
+            const { user, error } = res.data
+            if (error) dispatch(signupError(error))
             dispatch(signUp(user))
             localStorage.setItem("userId", user.id)
         });
@@ -20,7 +23,8 @@ export function createUser(user) {
 export const loginUser = (user) => {
     return (dispatch) => {
         Api.login(user).then((res) => {
-            const { user } = res.data;
+            const { user, error } = res.data
+            if (error) dispatch(loginError(error))
             dispatch(logIn(user))
             localStorage.setItem("userId", user.id)
         })
@@ -30,9 +34,23 @@ export const loginUser = (user) => {
 export const gameOver = (gameId, outcome, correct, incorrect) => {
     return (dispatch) => {
         Api.finishGame(gameId, outcome, correct, incorrect).then(res => {
-            const { user } = res.data;
+            const { user } = res.data
             dispatch(updateUser(user))
         })
+    }
+}
+
+function signupError(err) {
+    return {
+        err,
+        type: SIGN_UP_ERROR
+    }
+}
+
+function loginError(err) {
+    return {
+        err,
+        type: LOG_IN_ERROR
     }
 }
 

@@ -54,9 +54,11 @@ class Login extends Component {
     }
     
     render () {
+        const { err } = this.props
         return (
             <div className="modal">
                 <h1>Login</h1>
+                {err && <i className="error-text">{err}</i>}
                 <div>
                     <FacebookLogin socialId="yourAppID"
                                     language="en_US"
@@ -77,7 +79,7 @@ class Login extends Component {
                                 buttonText="Login With Google"/>
                 </div>
                 <div className="input-container">
-                    <input name="email" style={styles.inputFields} value={this.state.email} onChange={this.handleChange} type="email" placeholder="Email" required />
+                    <input name="email" style={styles.inputFields} value={this.state.email} onChange={this.handleChange} type="email" placeholder="Username or Email" required />
                     <input name="password" style={styles.inputFields} value={this.state.password} onChange={this.handleChange} type="password" placeholder="Password" required />
                     <button style={styles.facebookLogin} onClick={this.handleSubmit}>Login</button>
                 </div>
@@ -88,7 +90,8 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-    user: state.user
+    user: state.user,
+    err: state.err
 })
 
 const mapDispatchToProps = {
