@@ -1,11 +1,11 @@
 import React, {
     Component
 } from 'react'
-import * as appRoot from "app-root-path"
+// import * as appRoot from "app-root-path"
 import { TimelineMax } from "gsap"
 import { fonts } from '../theme'
-require(`${appRoot}/src/css/Hangman.css`)
-var DrawSVGPlugin = require(appRoot + '/node_modules/gsap/DrawSVGPlugin');
+import '../css/Hangman.css'
+var DrawSVGPlugin = require('gsap/DrawSVGPlugin');
 
 export class Hangman extends Component {
     state = {mistakes: 0, drawn: []}
