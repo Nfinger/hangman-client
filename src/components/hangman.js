@@ -5,7 +5,7 @@ import React, {
 import { TimelineMax } from "gsap"
 import { fonts } from '../theme'
 import '../css/Hangman.css'
-import DrawSVGPlugin from 'gsap/DrawSVGPlugin'
+import DrawSVGPlugin from "greensock-js-simply-green/src/bonus-files-for-npm-users/DrawSVGPlugin"
 
 export class Hangman extends Component {
     state = {mistakes: 0, drawn: []}

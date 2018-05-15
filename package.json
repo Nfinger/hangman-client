@@ -12,6 +12,7 @@
     "cryptojs": "^2.5.3",
     "cryptojslib": "^3.1.2",
     "gsap": "^1.20.4",
+    "greensock-js-simply-green": "file:./greensock-js-simply-green",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-facebook-login-component": "^0.9.2",
@@ -32,7 +33,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "postinstall": "cp DrawSVGPlugin.js ./node_modules/gsap",
     "eject": "react-scripts eject"
   }
 }
