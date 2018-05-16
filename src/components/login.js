@@ -53,13 +53,13 @@ class Login extends Component {
     }
 
     componentWillReceiveProps({user, err}) {
-        console.log(user, err)
+        // console.log(user, err)
         if (user) this.closeModal()
     }
     
     render () {
         const { err } = this.props
-        console.log(err)
+        // console.log(err)
         return (
             <div className="modal">
                 <h1>Login</h1>
