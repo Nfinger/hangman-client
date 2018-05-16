@@ -7,7 +7,7 @@ export class Api {
     }
 
     static signup = (user) => {
-        return axios.post(`${config.baseAPI}/signup`, {email: user.email, password: user.password})
+        return axios.post(`${config.baseAPI}/signup`, {email: user.email, username: user.username, password: user.password})
     }
 
     static login = (user) => {
