@@ -18,8 +18,8 @@ class Signup extends Component {
     state = {email: '', password: '', secondPassword: '', username: '', error: '', modalType: '', disabled: true, open: true}
     
     responseFacebook (response) {
-        console.log(response);
-        this.props.dispatchCreateUser()
+        // console.log(response);
+        // this.props.dispatchCreateUser()
     }
 
     responseGoogle = (googleUser) => {
@@ -32,10 +32,6 @@ class Signup extends Component {
             password: userInfo.Eea
         }
         this.props.dispatchCreateUser(user)
-        this.setState(
-            ({open}) => {open: !open},
-            () => this.props.onClose(this.state.open)
-        )
     }
 
     handleChange = (event) => {
@@ -47,7 +43,6 @@ class Signup extends Component {
 
     handleSubmit = () => {
         this.props.dispatchCreateUser(this.state)
-        this.closeModal()
     }
 
     handleSwitch = () => {
@@ -64,10 +59,12 @@ class Signup extends Component {
         )
     }
 
-    // componentWillReceiveProps()
+    componentWillReceiveProps({auth: {err, user}}) {
+        if (user) this.closeModal()
+    }
     
     render () {
-        const { err } = this.props
+        const {auth: {err} } = this.props
         return (
             <div className="modal">
                 <h1>Signup</h1>
@@ -106,8 +103,7 @@ class Signup extends Component {
 }
 
 const mapStateToProps = state => ({
-    user: state.user,
-    err: state.err
+    auth: state.auth
 })
 
 const mapDispatchToProps = {

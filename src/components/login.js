@@ -10,7 +10,7 @@ class Login extends Component {
     state = {email: '', password: '', open: true, modalType: "login"}
     
     responseFacebook (response) {
-        console.log(response);
+        // console.log(response);
         //anything else you want to do(save to localStorage)...
     }
 
@@ -35,7 +35,6 @@ class Login extends Component {
 
     handleSubmit = () => {
         this.props.dispatchLogin(this.state)
-        
     }
 
     closeModal = () => {
@@ -52,13 +51,12 @@ class Login extends Component {
         )
     }
 
-    componentWillReceiveProps({user, err}) {
-        // console.log(user, err)
+    componentWillReceiveProps({auth: {err, user}}) {
         if (user) this.closeModal()
     }
     
     render () {
-        const { err } = this.props
+        const {auth: {err} } = this.props
         // console.log(err)
         return (
             <div className="modal">
@@ -95,8 +93,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-    user: state.user,
-    err: state.err
+    auth: state.auth,
 })
 
 const mapDispatchToProps = {
