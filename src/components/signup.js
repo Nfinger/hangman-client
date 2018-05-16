@@ -63,6 +63,8 @@ class Signup extends Component {
             () => this.props.onClose(this.state.open),
         )
     }
+
+    // componentWillReceiveProps()
     
     render () {
         const { err } = this.props

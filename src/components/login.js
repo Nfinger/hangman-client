@@ -24,7 +24,6 @@ class Login extends Component {
             password: userInfo.Eea
         }
         this.props.dispatchLogin(user)
-        this.closeModal()
     }
 
     handleChange = (event) => {
@@ -36,7 +35,7 @@ class Login extends Component {
 
     handleSubmit = () => {
         this.props.dispatchLogin(this.state)
-        this.closeModal()
+        
     }
 
     closeModal = () => {
@@ -52,9 +51,15 @@ class Login extends Component {
             () => this.props.onModalSwitch(this.state.modalType)
         )
     }
+
+    componentWillReceiveProps({user, err}) {
+        console.log(user, err)
+        if (user) this.closeModal()
+    }
     
     render () {
         const { err } = this.props
+        console.log(err)
         return (
             <div className="modal">
                 <h1>Login</h1>

@@ -13,7 +13,10 @@ export function createUser(user) {
     return (dispatch) => {
         Api.signup(user).then((res) => {
             const { user, error } = res.data
-            if (error) dispatch(signupError(error))
+            if (error) {
+                dispatch(signupError(error))
+                return;
+            }
             dispatch(signUp(user))
             localStorage.setItem("userId", user.id)
         });
@@ -24,7 +27,10 @@ export const loginUser = (user) => {
     return (dispatch) => {
         Api.login(user).then((res) => {
             const { user, error } = res.data
-            if (error) dispatch(loginError(error))
+            if (error) {
+                dispatch(loginError(error))
+                return;
+            }
             dispatch(logIn(user))
             localStorage.setItem("userId", user.id)
         })
